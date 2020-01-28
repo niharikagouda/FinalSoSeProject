@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;LibraryManagement/src/main/java/com/italia/soaproject/rest/swagger/SwaggerDocumentationConfig.java&apos; to &apos;SpringFoxConfig.java&apos;" description="Rename resource &apos;SwaggerDocumentationConfig.java&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/main/java/com/italia/soaproject/rest/swagger/SwaggerDocumentationConfig.java" name="SpringFoxConfig.java" stamp="1580050763084" updateReferences="true"/>
+</session>

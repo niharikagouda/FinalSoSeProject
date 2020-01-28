@@ -1,0 +1,39 @@
+package com.italia.soaproject.rest.library;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.italia.soaproject.rest.library.database.BookDatabase;
+import com.italia.soaproject.rest.library.database.BookDatabaseImpl;
+import com.italia.soaproject.rest.library.model.Book;
+import com.italia.soaproject.rest.user.model.Login;
+
+public class LibraryAdminController {
+
+	private BookDatabase bdb = new BookDatabaseImpl();
+	
+	
+	@RequestMapping(value = "/addBook", method = RequestMethod.POST)
+	public ModelAndView login(@ModelAttribute("addbookForm") Book book,  HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView("admin");
+		
+		
+		//calling of isValidUser()
+		boolean  status = bdb.saveBook(book);
+		//if no data stay in login page...if data is there then go to admin and home page.
+		
+		if(status)
+			mav.addObject("status", "Book  "+ book.getBookname()+" added to the Library");
+		else
+			mav.addObject("status", "Problem while adding book, "+ book.getBookname()+" to the Library");
+		
+		return mav;
+		
+	}
+
+}

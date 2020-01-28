@@ -1,0 +1,10 @@
+package com.italia.soaproject.rest.library.database;
+
+public class BookDatabase {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

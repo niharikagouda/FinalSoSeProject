@@ -1,0 +1,16 @@
+com/italia/soaproject/rest/configuration/AppConfiguration.class
+com/italia/soaproject/rest/library/database/BookDatabase.class
+com/italia/soaproject/rest/library/LibraryController.class
+com/italia/soaproject/rest/user/UserController.class
+com/italia/soaproject/mongodb/JavaMongoConnection.class
+com/italia/soaproject/rest/configuration/AppInitializer.class
+com/italia/soaproject/rest/library/LibraryAdminController.class
+com/italia/soaproject/rest/library/model/Book.class
+com/italia/soaproject/soap/book/BookController.class
+com/italia/soaproject/rest/user/database/UserDatabaseImpl.class
+com/italia/soaproject/soap/SoapService.class
+com/italia/soaproject/rest/user/model/User.class
+com/italia/soaproject/rest/library/database/BookDatabaseImpl.class
+com/italia/soaproject/rest/user/model/Login.class
+com/italia/soaproject/rest/user/database/UserDatabase.class
+com/italia/soaproject/rest/user/UserAdminController.class

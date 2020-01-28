@@ -1,0 +1,29 @@
+package com.italia.soaproject.rest.library;
+
+import java.util.List;
+import java.util.UUID;
+
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.italia.soaproject.rest.library.database.BookDatabase;
+import com.italia.soaproject.rest.library.database.BookDatabaseImpl;
+import com.italia.soaproject.rest.library.model.Book;
+
+@RestController
+public class LibraryController {
+	
+	BookDatabase udb = new BookDatabaseImpl();
+	
+	
+	
+	@RequestMapping("/listBooks")
+    public List<Book> listBooks() {
+		
+		return udb.listBooks();
+		
+    }
+
+}

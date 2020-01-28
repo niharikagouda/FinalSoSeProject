@@ -1,0 +1,255 @@
+<html>
+
+
+<head>
+<h2 style="padding-left: 37%">Library Management Admin page</h2>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+	integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+	crossorigin="anonymous"></script>
+
+
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	
+<script>
+
+var dataArr =[];
+var userId;
+
+function searchBooks(){
+	var searchEle = document.getElementById("keyword");
+	
+	var keyword = searchEle.value;
+	
+	var url = "http://localhost:8080/LibraryManagement/searchBooks/"+keyword;
+	
+	console.log(url)
+
+	$.ajax({
+		url : url,
+		type : "GET",
+		success : function(data, textStatus, jqXHR) {
+			dataArr = data;
+			createTable(data)
+			
+			
+			
+			
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			console.log('error')
+		}
+	});
+	
+}
+
+function removeBook(index){
+	console.log(dataArr[index])
+	
+	var isbn = dataArr[index].bookISBN;
+
+	
+	
+
+	var url = "http://localhost:8080/SumSOAPServiceMaven/book";
+	var soapMessage = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sum="http://sum.maven.odws.univaq.it/"><soapenv:Header/><soapenv:Body><sum:removeBook><arg0>'+isbn+'</arg0></sum:removeBook> </soapenv:Body></soapenv:Envelope>';
+	
+	console.log(soapMessage)
+
+	$.ajax({
+		url : url,
+		type : "POST",
+		dataType: "xml", 
+	    data: soapMessage, 
+	    processData: false,
+	    contentType: "text/xml; charset=\"utf-8\"",
+		success : function(data, textStatus, jqXHR) {
+			console.log(data)
+			//alert("Book is already issued");
+			
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			console.log('error')
+			
+		}
+	});
+	
+	
+	
+}
+
+function createTable(data){
+	
+	var len = data.length;
+	
+	  var body = document.getElementById('searchTable');
+	  if(document.getElementsByTagName('table')[0])
+	 	body.removeChild(document.getElementsByTagName('table')[0]);
+	  
+	  if(document.getElementsByTagName('LABEL')[0])
+		 	body.removeChild(document.getElementsByTagName('LABEL')[0]);
+	  
+	  if(len == 0){
+		  var label = document.createElement("LABEL");
+		  label.innerHTML = "No data found";
+		  body.appendChild(label);
+		  return;
+	  }
+	  
+	  var tbl = document.createElement('table');
+	  
+	  tbl.style.width = '100%';
+	  //tbl.setAttribute('border', '1');
+	  tbl.setAttribute('class', 'table table-dark');
+	  var tbdy = document.createElement('tbody');
+	  
+	  //Header
+	  var tr1 = document.createElement('tr');
+	  var th1 = document.createElement('th');
+	  th1.appendChild(document.createTextNode('Name'))
+	  tr1.appendChild(th1);
+	  var th2 = document.createElement('th');
+	  th2.appendChild(document.createTextNode('Category'))
+	  tr1.appendChild(th2);
+	  var th3 = document.createElement('th');
+	  th3.appendChild(document.createTextNode('ISBN'))
+	  tr1.appendChild(th3);
+	  var th4 = document.createElement('th');
+	  th4.appendChild(document.createTextNode('Author'))
+	  tr1.appendChild(th4);
+	  var th5 = document.createElement('th');
+	  th5.appendChild(document.createTextNode('Publisher'))
+	  tr1.appendChild(th5);
+	  var th6 = document.createElement('th');
+	  th6.appendChild(document.createTextNode('Year of Publication'))
+	  tr1.appendChild(th6);
+	  var th7 = document.createElement('th');
+	  th7.appendChild(document.createTextNode('Remove Book'))
+	  tr1.appendChild(th7);
+	  tbdy.appendChild(tr1);
+	  
+	  for (var i = 0; i < len; i++) {
+	    var tr = document.createElement('tr');
+	    for (var j = 0; j < 7; j++) {
+	      
+	        var td = document.createElement('td');
+	        
+	        if(j == 0)
+	        	td.appendChild(document.createTextNode(data[i].bookname))
+	        else if(j ==1)
+	        	td.appendChild(document.createTextNode(data[i].bookcategory))
+	        else if(j ==2)
+	        	td.appendChild(document.createTextNode(data[i].bookISBN))
+	        else if(j ==3)
+	        	td.appendChild(document.createTextNode(data[i].bookauthor))
+	        else if(j ==4)
+	        	td.appendChild(document.createTextNode(data[i].bookpublisher))
+	        else if(j ==5)
+	        	td.appendChild(document.createTextNode(data[i].bookpublished_year))
+	        else if(j ==6){
+	        	var btn = document.createElement("input");
+	        	btn.setAttribute("type", "button");
+	        	btn.setAttribute("value", "Remove");
+	        	
+	        	btn.setAttribute("onClick", "removeBook("+i+")");
+	        	td.appendChild(btn)
+	        }
+	        
+	        tr.appendChild(td)
+	      
+	    }
+	    tbdy.appendChild(tr);
+	  }
+	  tbl.appendChild(tbdy);
+	  body.appendChild(tbl)
+}
+
+</script>
+
+
+
+</head>
+<body>
+
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<a class="navbar-brand" href="#">LIBRARY MANAGEMENT SYSTEM</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+					
+				<li class="nav-item"><a class="nav-link" href="jsp/book.jsp">Add Books</a>
+				</li>
+				
+			
+			</ul>
+			<form class="form-inline my-2 my-lg-0">
+
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false"> ${userName} </a>
+					
+				</li>
+				
+				<li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Log Out</a></li>
+				
+			</form>
+			
+		</div>
+	</nav>
+	
+	<p>${status}</p>
+	
+	<form class="form-inline my-2 my-lg-0">
+	
+		<input type="hidden"  value = "${userId}" id="userId">
+	
+		<div class="card-body" bis_skin_checked="1">
+	
+		<div style="text-align:left;">
+  
+  		<input type="text" id="keyword" class="form-control" placeholder="Search.." style="width: 600px;">
+  		<input type="button" class="btn btn-lg btn-primary " value="Search" onclick="searchBooks();">
+  		
+  		<div id="searchTable">
+  			
+  		
+  		
+  		</div>
+  		</div>
+  		
+  		</div>
+
+	</form>
+
+</body>
+</html>
+
+
+
+
+
+

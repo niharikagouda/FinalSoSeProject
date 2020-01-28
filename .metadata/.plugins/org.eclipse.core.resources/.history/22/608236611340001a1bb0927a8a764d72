@@ -1,0 +1,10 @@
+package it.univaq.odws.maven.sum;
+
+public class BookControllerImpl implements BookController {
+	@Override
+	public boolean removeBook(String isbn) {
+		return true;
+	}
+
+	
+}

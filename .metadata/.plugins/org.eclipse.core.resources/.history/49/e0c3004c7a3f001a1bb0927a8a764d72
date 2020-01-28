@@ -1,0 +1,79 @@
+package com.italia.soaproject.rest.library;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.italia.soaproject.rest.library.database.BookDatabase;
+import com.italia.soaproject.rest.library.database.BookDatabaseImpl;
+import com.italia.soaproject.rest.library.model.Book;
+
+@RestController
+public class LibraryController {
+	
+	BookDatabase udb = new BookDatabaseImpl();
+	
+	
+	
+	@RequestMapping(value = "/searchBooks/{keyword}", method = RequestMethod.GET)
+    public List<Book> searchBooks(@PathVariable("keyword") String keyword) {
+		
+		if(keyword == null) {
+			return new ArrayList<Book>();
+		}
+		
+		return udb.listBooks(keyword);
+		
+    }
+	
+	
+	@RequestMapping(value = "/issueBook", method = RequestMethod.POST)
+    public Boolean issueBook(@RequestParam(name = "bookId") String bookId, @RequestParam(name = "userId") String userId) {
+		
+		if(bookId == null || userId == null) {
+			return false;
+		}
+		
+		Integer user = Integer.parseInt(userId);
+		
+		if(udb.isAlreadyIssued(bookId, user)) {
+			return false;
+		}
+		
+		return udb.issueBook(bookId, user);
+		
+	}
+
+	
+	@RequestMapping(value = "/addBooks", method = RequestMethod.POST)
+    public Boolean addBooks(@RequestParam(name="ISBN") String ISBN, @RequestParam(name="author") String author ) {
+		
+		if(ISBN == null || author == null) {
+			return false;
+		}
+			
+		return null;
+		
+		
+		
+	}		
+		
+		
+}		
+    
+	
+	
+	
+	
+	
+	
+	
+
+

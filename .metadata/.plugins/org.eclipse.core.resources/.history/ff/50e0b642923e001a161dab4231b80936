@@ -1,0 +1,5 @@
+package com.italia.soaproject.rest.library;
+
+public class LibraryAdminController {
+
+}

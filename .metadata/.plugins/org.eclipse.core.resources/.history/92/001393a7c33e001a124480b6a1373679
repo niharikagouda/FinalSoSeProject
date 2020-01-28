@@ -1,0 +1,52 @@
+package com.italia.soaproject.rest.library.database;
+
+import java.util.List;
+
+import org.bson.Document;
+
+import com.italia.soaproject.mongodb.JavaMongoConnection;
+import com.italia.soaproject.rest.library.model.Book;
+
+import com.mongodb.BasicDBObject;
+
+public class BookDatabaseImpl implements BookDatabase {
+	
+JavaMongoConnection conn = new JavaMongoConnection();
+	
+	/*public void addBook(Book book) {
+		
+		Document doc = new Document();
+		doc.put("Bookname", book.getbookname());
+		doc.put("Bookcategory", book.getbookcategory());
+		conn.insert("student", doc);
+	}*/
+	
+	public List<Book> listBooks(String keyword){
+		List<Document> docs = conn.findDocument("book", new BasicDBObject());
+		
+		
+		
+		return null;
+		
+		
+	}
+	
+	public Book isValidBook(Book search) {
+		BasicDBObject match = new  BasicDBObject();
+		match.append("name", search.getBookname());
+		match.append("author", search.getBookauthor());
+		match.append("category", search.getBookcategory());
+		
+		List<Document> SearchDocs = conn.findDocument("search", match);
+		
+		if(SearchDocs.size() == 1) {
+			Document doc = SearchDocs.get(0);
+			
+			return search;
+		}
+		
+		return null;
+	}
+	
+
+}

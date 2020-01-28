@@ -1,0 +1,5 @@
+package com.italia.soaproject.rest.swagger;
+
+public class SwaggerDocumentationConfig {
+
+}

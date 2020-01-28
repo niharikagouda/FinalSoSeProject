@@ -1,0 +1,24 @@
+package com.italia.soaproject.rest.swagger;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+
+public class SwaggerConfigurationServlet extends HttpServlet{
+	
+	public void init(ServletConfig config){
+		try {
+			super.init(config);
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		
+		 
+	}
+
+}

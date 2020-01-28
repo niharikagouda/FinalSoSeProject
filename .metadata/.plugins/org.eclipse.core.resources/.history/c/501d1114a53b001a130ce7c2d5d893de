@@ -1,0 +1,45 @@
+package com.italia.soaproject.rest.user;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.italia.soaproject.rest.user.database.UserDatabase;
+import com.italia.soaproject.rest.user.database.UserDatabaseImpl;
+import com.italia.soaproject.rest.user.model.Login;
+
+@Controller
+public class UserAdminController {
+
+	private UserDatabase udb = new UserDatabaseImpl();
+	
+	
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public ModelAndView login(@ModelAttribute("loginForm") Login login,  HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView("index");
+		
+		System.out.println(login.getLoginId());
+		System.out.println(login.getPassword());
+		Login login1 = udb.isValidUser(login);
+		
+		if(login1 == null) {
+			return mav;
+		} else {
+			if(login1.isAdmin()) {
+				ModelAndView mv = new ModelAndView("admin");
+				return mv;
+			} else {
+				ModelAndView mv = new ModelAndView("home");
+				return mv;
+			}
+		}
+		
+	
+	}
+
+}

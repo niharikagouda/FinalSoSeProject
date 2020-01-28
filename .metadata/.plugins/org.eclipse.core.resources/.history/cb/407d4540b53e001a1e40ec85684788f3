@@ -1,0 +1,37 @@
+package com.italia.soaproject.rest.library;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.italia.soaproject.rest.library.database.BookDatabase;
+import com.italia.soaproject.rest.library.database.BookDatabaseImpl;
+import com.italia.soaproject.rest.library.model.Book;
+
+public class LibraryAdminController {
+	
+	
+private BookDatabase udb = new BookDatabaseImpl();
+	
+	
+	@RequestMapping(value = "/search", method = RequestMethod.POST)
+	public ModelAndView login(@ModelAttribute("searchForm") Book  search,  HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView("admin");
+		
+		/*System.out.println(login.getLoginId());
+		System.out.println(login.getPassword());*/
+		Book search1 = udb.isValidBook(search);
+		
+		if(search1 == null) {
+			return mav;
+		} else {
+			ModelAndView mv = new ModelAndView("Book");
+			return mv;
+		}
+
+		}
+
+}

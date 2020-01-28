@@ -1,0 +1,71 @@
+package com.italia.soaproject.rest.scheduler;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import org.bson.Document;
+
+import com.italia.soaproject.mongodb.JavaMongoConnection;
+import com.italia.soaproject.rest.library.model.Book;
+import com.mongodb.BasicDBObject;
+
+public class ValidationScheduler {
+	 
+	JavaMongoConnection conn = new JavaMongoConnection();
+	
+	
+	public ValidationScheduler() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public List<Book> schedule() {
+		
+		List<Book> list = new ArrayList<Book>();
+		
+		//Validate Category
+		Runnable task1 = () -> {
+			
+			List<Document> docList = conn.findDocument("book", new BasicDBObject());
+			
+			
+			for(Document doc : docList) {
+				if(! doc.getString("category").allMatch(Character::isLetter)) {
+					Book book = new Book(doc.getString("name"), bookcategory, bookISBN, bookauthor, bookpublisher, bookpublished_year);
+					list.add(book);
+				}
+			}
+			
+			
+		};
+		
+		
+		//Validate Author
+		Runnable task2 = () -> {
+			
+			
+		};
+		
+		//Name
+		Runnable task3 = () -> {
+			
+			
+		};
+		
+		
+		
+		ExecutorService service = Executors.newFixedThreadPool(2);
+		
+		service.execute(task1);
+		service.execute(task2);
+		service.execute(task3);
+		
+		
+		return list;
+	}
+	
+	
+	
+
+}

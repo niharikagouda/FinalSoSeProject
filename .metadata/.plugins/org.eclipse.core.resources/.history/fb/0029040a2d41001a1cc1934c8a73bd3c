@@ -1,0 +1,46 @@
+package com.italia.soaproject.rest.scheduler;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class ValidationScheduler {
+	
+	
+	public ValidationScheduler() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public void schedule() {
+		
+		
+		
+		Runnable task1 = () -> {
+			
+			
+		};
+		
+		
+		
+		Runnable task2 = () -> {
+			
+			
+		};
+		
+		Runnable task3 = () -> {
+			
+			
+		};
+		
+		
+		
+		ExecutorService service = Executors.newFixedThreadPool(2);
+		
+		service.execute(task1);
+		service.execute(task2);
+		service.execute(task3);
+	}
+	
+	
+	
+
+}

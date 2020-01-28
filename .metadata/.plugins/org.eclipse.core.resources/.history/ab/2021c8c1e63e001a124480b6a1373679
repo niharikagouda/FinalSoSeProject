@@ -1,0 +1,54 @@
+package com.italia.soaproject.rest.user.database;
+
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+import org.bson.Document;
+
+import com.italia.soaproject.mongodb.JavaMongoConnection;
+import com.italia.soaproject.rest.user.model.Login;
+import com.italia.soaproject.rest.user.model.User;
+import com.mongodb.BasicDBObject;
+
+public class UserDatabaseImpl implements UserDatabase {
+	
+	JavaMongoConnection conn = new JavaMongoConnection();
+	
+	public void addUser(User user) {
+		
+		Document doc = new Document();
+		doc.put("studentId", user.getUserId());
+		doc.put("name", user.getUserName());
+		conn.insert("student", doc);
+	}
+	
+	public   List<User> listUsers(){
+		List<Document> docs = conn.findDocument("student", new BasicDBObject());
+		
+		
+		
+		return null;
+		
+		
+	}
+	
+	public Login isValidUser(Login  login) {
+		BasicDBObject match = new  BasicDBObject();
+		match.append("loginId", login.getLoginId());
+		match.append("password", login.getPassword());
+		List<Document> loginDocs = conn.findDocument("login", match);
+		
+		if(loginDocs.size() == 1) {
+			Document doc = loginDocs.get(0);
+			login.setAdmin(doc.getBoolean("isAdmin"));
+			login.setUsername(doc.getString("name"));
+			return login;
+		}
+		
+		return null;
+	}
+	
+
+	
+	
+}

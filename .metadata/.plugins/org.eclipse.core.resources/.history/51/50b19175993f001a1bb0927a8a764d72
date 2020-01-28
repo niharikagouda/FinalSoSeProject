@@ -1,0 +1,13 @@
+package com.italia.soaproject.rest.library;
+
+import com.italia.soaproject.rest.library.database.BookDatabase;
+import com.italia.soaproject.rest.library.database.BookDatabaseImpl;
+
+public class LibraryAdminController {
+	
+	
+private BookDatabase udb = new BookDatabaseImpl();
+	
+	
+
+}

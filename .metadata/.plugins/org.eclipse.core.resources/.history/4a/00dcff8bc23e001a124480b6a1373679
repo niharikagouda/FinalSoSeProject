@@ -1,0 +1,16 @@
+package com.italia.soaproject.rest.library.database;
+import java.util.List;
+
+import com.italia.soaproject.rest.library.model.Book;
+
+
+public interface BookDatabase {
+	
+	/*public void addBook(Book book);*/
+		public List<Book> listBooks();
+		public Book isValidBook(Book search);
+
+	
+
+
+}

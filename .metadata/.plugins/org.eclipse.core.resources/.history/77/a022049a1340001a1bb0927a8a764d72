@@ -1,0 +1,15 @@
+package it.univaq.odws.maven.sum;
+
+import javax.jws.WebMethod;
+import javax.jws.WebService;
+
+@WebService
+public interface BookController {
+	
+	@WebMethod
+	boolean removeBook(String isbn);
+	
+	@WebMethod
+	int safeSum(int a, int b) throws SumException;
+
+}

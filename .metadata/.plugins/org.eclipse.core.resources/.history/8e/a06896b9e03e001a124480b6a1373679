@@ -1,0 +1,21 @@
+package com.italia.soaproject.rest.library;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.italia.soaproject.rest.library.database.BookDatabase;
+import com.italia.soaproject.rest.library.database.BookDatabaseImpl;
+import com.italia.soaproject.rest.library.model.Book;
+
+public class LibraryAdminController {
+	
+	
+private BookDatabase udb = new BookDatabaseImpl();
+	
+	
+
+}

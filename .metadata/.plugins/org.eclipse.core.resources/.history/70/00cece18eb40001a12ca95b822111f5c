@@ -1,0 +1,20 @@
+*{
+padding: 0;
+margin: 0;
+} 
+ 
+body {font:  15px arial, serif;
+ text-align: center;}
+
+
+.backImg{
+
+width: 100%;
+height: 100vh;
+background-image: url('webapp/4.jpg');
+ background-size: cover;
+ font-size: 20px;
+color: black;
+ text-align: center; 
+
+}

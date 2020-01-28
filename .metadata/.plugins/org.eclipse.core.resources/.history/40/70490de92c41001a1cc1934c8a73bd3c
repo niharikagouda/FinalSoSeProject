@@ -1,0 +1,23 @@
+package com.italia.soaproject.rest.scheduler;
+
+public class ValidationScheduler {
+	
+	
+	public ValidationScheduler() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public void schedule() {
+		
+		
+		
+		Runnable task1 = () -> {
+			
+			
+		};
+	}
+	
+	
+	
+
+}

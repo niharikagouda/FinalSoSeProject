@@ -1,0 +1,135 @@
+package com.italia.soaproject.rest.library.database;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
+
+import org.bson.Document;
+import javax.swing.JOptionPane;
+
+import com.italia.soaproject.mongodb.JavaMongoConnection;
+import com.italia.soaproject.rest.library.model.Book;
+import com.italia.soaproject.rest.user.model.Login;
+import com.mongodb.BasicDBList;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+
+public class BookDatabaseImpl implements BookDatabase {
+
+	JavaMongoConnection conn = new JavaMongoConnection();
+
+	/*
+	 * public void addBook(Book book) {
+	 * 
+	 * Document doc = new Document(); doc.put("Bookname", book.getbookname());
+	 * doc.put("Bookcategory", book.getbookcategory()); conn.insert("student", doc);
+	 * }
+	 */
+
+	public List<Book> listBooks(String keyword) {
+		Pattern regex = Pattern.compile("keyword");
+		DBObject nameCl = new BasicDBObject("name", keyword);
+		DBObject authorCl = new BasicDBObject("author", keyword);
+		DBObject categoryCl = new BasicDBObject("category", keyword);
+		DBObject publisherCl = new BasicDBObject("publisher", keyword);
+
+		BasicDBList or = new BasicDBList();
+		or.add(nameCl);
+		or.add(authorCl);
+		or.add(categoryCl);
+		or.add(publisherCl);
+
+		BasicDBObject basicDbObject = new BasicDBObject();
+
+		basicDbObject.append("$or", or);
+
+		List<Document> docs = conn.findDocument("book", basicDbObject);
+		
+		System.out.println(docs.size());
+		System.out.println(basicDbObject.toString());
+		
+		
+
+		List<Book> output = new ArrayList<Book>();
+		for (Document dc : docs) {
+			Book book = new Book(dc.getString("name"), dc.getString("category"), dc.getString("ISBN"),
+					dc.getString("author"), dc.getString("publisher"), dc.getInteger("latest_publisher"));
+			output.add(book);
+			
+			System.out.println(book.toString());
+
+		}
+
+	
+		return output;
+
+	}
+
+	
+	
+
+	@Override
+	public Boolean isAlreadyIssued(String isbn, Integer userId) {
+		BasicDBObject match = new BasicDBObject();
+		match.append("bookId",isbn);
+		match.append("userId", userId);
+
+		List<Document> searchDocs = conn.findDocument("issued_book", match);
+
+		if (searchDocs.size() == 1) {
+			
+			
+			
+			return true;
+		}
+		
+		return false;
+	
+	}
+
+	@Override
+	public Boolean issueBook(String isbn, Integer userId) {
+		
+		Document doc = new Document();
+		doc.append("userId", userId);
+		doc.append("bookId", isbn);
+		
+		
+		
+		
+		if(conn.insert("issued_book", doc))
+		{
+			
+			return true;
+			
+		}
+		
+		
+		return false;
+		
+	}
+	
+	public Boolean addBook(Book  addBook) {
+		Document doc = new  Document();
+		
+		doc.append("name", addBook.getBookname());
+		doc.append("category", addBook.getBookcategory());
+		doc.append("ISBN", addBook.getBookISBN());
+		doc.append("author", addBook.getBookauthor());
+		doc.append("publisher", addBook.getBookpublisher());
+		doc.append("latest_publisher", addBook.getBookpublished_year());
+		
+		
+		System.out.println(addBook.getBookname());
+		
+		if(conn.insert("book", doc))
+		{
+			return true;
+	
+		}
+		
+		return false;
+		
+	}
+
+}

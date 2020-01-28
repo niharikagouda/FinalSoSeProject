@@ -1,0 +1,5 @@
+package com.italia.soaproject.rest.library.database;
+
+public interface BookDatabase {
+
+}

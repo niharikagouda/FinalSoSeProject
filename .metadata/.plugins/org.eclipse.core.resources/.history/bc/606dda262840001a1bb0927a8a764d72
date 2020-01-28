@@ -1,0 +1,15 @@
+package com.italia.soaproject.rest.swagger;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.http.HttpServlet;
+
+public class SwaggerConfigurationServlet extends HttpServlet{
+	
+	public void init(ServletConfig config) throws Exception
+	{
+		super.init(config);
+		
+		 
+	}
+
+}
