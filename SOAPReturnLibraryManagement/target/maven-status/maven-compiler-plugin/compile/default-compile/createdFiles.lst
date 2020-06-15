@@ -1,0 +1,6 @@
+com/italia/soaproject/mongodb/JavaMongoConnection.class
+com/italia/soaproject/returnBook/SimpleCXFNonSpringServlet.class
+com/italia/soaproject/returnBook/BookReturnControllerImpl.class
+com/italia/soaproject/returnBook/BookReturnController.class
+com/italia/soaproject/returnBook/FindBook.class
+com/italia/soaproject/returnBook/BookReturnControllerImpl$1.class
